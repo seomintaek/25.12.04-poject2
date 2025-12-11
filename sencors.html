@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>센서 탐색 및 매칭 게임</title>
+  </head>
+  <body>
+    <!-- 네비게이션 바 -->
+    <nav class="top-navigation" id="topNavigation">
+      <a href="index.html" class="nav-item" data-stage="1">
+        <span class="nav-number">1</span>
+        <span class="nav-label">아이디어</span>
+      </a>
+      <a href="sencors.html" class="nav-item" data-stage="2">
+        <span class="nav-number">2</span>
+        <span class="nav-label">센서 탐색</span>
+      </a>
+      <a href="practice.html" class="nav-item" data-stage="3">
+        <span class="nav-number">3</span>
+        <span class="nav-label">실습하기</span>
+      </a>
+    </nav>
+    
+    <div id="app">
+      <!-- 학습 모드 (초기 화면) -->
+      <div class="study-mode" id="studyMode">
+        <header class="study-header" style="display: none;">
+          <button class="back-to-home-button" id="backToHomeButton">
+            ← 아이디어 산출로 돌아가기
+          </button>
+          <h1>📚 센서 탐색하기</h1>
+          <p>각 센서를 자세히 알아보고, 게임으로 복습해보세요!</p>
+        </header>
+        
+        <div class="sensors-grid" id="sensorsGrid">
+          <!-- 센서 카드들이 여기에 동적으로 추가됩니다 -->
+        </div>
+        
+        <div class="study-footer">
+          <button class="start-game-mode-button" id="startGameModeButton">
+            🎮 미니게임 시작하기
+          </button>
+          <button class="next-page-button study-next-button hidden" id="studyNextPageButton" style="display: none;">
+            🚀 실습하러 가기 (3페이지)
+          </button>
+        </div>
+      </div>
+
+      <!-- 게임 모드 (게임 시작 시 표시) -->
+      <div class="game-mode hidden" id="gameMode">
+        <header class="game-mode-header">
+          <button class="back-to-study-button" id="backToStudyButton">
+            ← 학습 화면으로 돌아가기
+          </button>
+          <div class="game-header-content">
+            <h2>🎮 센서 짝맞추기 게임</h2>
+            <div class="game-score" id="gameScore">
+              <span class="score-item correct-score">맞춤: <span id="correctCount">0</span></span>
+              <span class="score-item incorrect-score">틀림: <span id="incorrectCount">0</span></span>
+            </div>
+          </div>
+        </header>
+        
+        <div class="game-area-full">
+          <div class="drag-zone">
+            <h3>이미지를 드래그하세요</h3>
+            <div class="drag-items" id="dragItems">
+              <!-- 드래그 가능한 이미지들이 여기에 추가됩니다 -->
+            </div>
+          </div>
+
+          <div class="drop-zone">
+            <h3>설명과 맞춰보세요</h3>
+            <div class="drop-items" id="dropItems">
+              <!-- 드롭 존들이 여기에 추가됩니다 -->
+            </div>
+          </div>
+        </div>
+
+        <div class="game-complete-screen hidden" id="gameCompleteScreen">
+          <div class="complete-message">
+            <h2>🎉 게임 완료!</h2>
+            <p class="congratulations-message" id="congratulationsMessage" style="display: none;">
+              모두 맞췄어요! 이제 실습하러 가볼까요? 🚀
+            </p>
+            <div class="final-score" id="finalScore">
+              <p class="score-text">맞춘 개수: <span id="finalCorrectCount">0</span>개</p>
+              <p class="score-text">틀린 개수: <span id="finalIncorrectCount">0</span>개</p>
+            </div>
+            <div class="complete-buttons">
+              <button class="back-to-home-button complete-button" id="backToHomeButtonComplete">
+                ← 아이디어 산출로 돌아가기
+              </button>
+              <button class="start-game-mode-button" id="restartGameButton">
+                🔄 새 게임
+              </button>
+              <button class="next-page-button" id="nextPageButton" style="display: none;">
+                🚀 실습하러 가기 (3페이지)
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI 챗봇 (오른쪽 하단 고정) -->
+      <div class="chatbot-container">
+        <!-- 챗봇 아이콘 버튼 -->
+        <button class="chatbot-toggle" id="chatbotToggle">
+          <span class="chatbot-icon">🤖</span>
+        </button>
+        
+        <!-- 챗봇 창 -->
+        <div class="chatbot-window hidden" id="chatbotWindow">
+          <div class="chatbot-header">
+            <h3>🤖 척척박사 센서 AI</h3>
+            <div class="chatbot-header-actions">
+              <button class="chatbot-clear" id="chatbotClear" title="대화 지우기">🗑️</button>
+              <button class="chatbot-close" id="chatbotClose">×</button>
+            </div>
+          </div>
+          
+          <div class="chatbot-messages" id="chatbotMessages">
+            <div class="chatbot-message ai-message">
+              <div class="message-bubble">
+                안녕하세요! 저는 척척박사 센서 AI예요! 🎓<br>
+                어떤 센서를 사용하면 좋을지 궁금한 점이 있나요?<br>
+                예: "손을 대지 않고 쓰레기통 문을 열고 싶어"라고 물어보세요!
+              </div>
+            </div>
+          </div>
+          
+          <div class="chatbot-input-container">
+            <div class="loading-indicator" id="chatbotLoading" style="display: none;">
+              <span>선생님이 생각 중이에요...</span>
+            </div>
+            <div class="chatbot-input-wrapper">
+              <input 
+                type="text" 
+                id="chatbotInput" 
+                placeholder="무엇이든 물어보세요..."
+                autocomplete="off"
+              />
+              <button id="chatbotSendButton" type="button">
+                전송
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 센서 상세 설명 모달 -->
+    <div class="sensor-modal hidden" id="sensorModal">
+      <div class="modal-overlay" id="modalOverlay"></div>
+      <div class="modal-content">
+        <button class="modal-close" id="modalClose" aria-label="닫기">×</button>
+        <div class="modal-image-wrapper">
+          <img id="modalImage" src="" alt="" class="modal-image" />
+        </div>
+        <div class="modal-body">
+          <h2 id="modalTitle" class="modal-title"></h2>
+          <p id="modalDescription" class="modal-description"></p>
+        </div>
+        <div class="modal-footer">
+          <button class="modal-close-button" id="modalCloseButton">닫기</button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/src/sensors.js"></script>
+  </body>
+</html>

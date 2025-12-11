@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>아이디어 산출 - 발명 선생님과의 대화</title>
+  </head>
+  <body>
+    <!-- 네비게이션 바 -->
+    <nav class="top-navigation" id="topNavigation">
+      <a href="index.html" class="nav-item" data-stage="1">
+        <span class="nav-number">1</span>
+        <span class="nav-label">아이디어</span>
+      </a>
+      <a href="sencors.html" class="nav-item" data-stage="2">
+        <span class="nav-number">2</span>
+        <span class="nav-label">센서 탐색</span>
+      </a>
+      <a href="practice.html" class="nav-item" data-stage="3">
+        <span class="nav-number">3</span>
+        <span class="nav-label">실습하기</span>
+      </a>
+    </nav>
+    
+    <div id="app">
+      <div class="container">
+        <header class="header">
+          <h1>🔬 발명 선생님과의 대화</h1>
+          <p class="subtitle">전자제품 아이디어를 함께 만들어요!</p>
+        </header>
+        
+        <div class="chat-container" id="chatContainer">
+          <!-- 채팅 메시지들이 여기에 동적으로 추가됩니다 -->
+        </div>
+        
+        <div class="input-container">
+          <div class="loading-indicator" id="loadingIndicator" style="display: none;">
+            <span class="loading-dots">선생님이 생각 중이에요</span>
+            <span class="dot">.</span>
+            <span class="dot">.</span>
+            <span class="dot">.</span>
+          </div>
+          <div class="input-wrapper">
+            <input 
+              type="text" 
+              id="userInput" 
+              placeholder="여기에 답변을 입력하세요..."
+              autocomplete="off"
+            />
+            <button id="sendButton" type="button">
+              <span>전송</span>
+            </button>
+          </div>
+        </div>
+        
+        <div class="next-page-container" id="nextPageContainer" style="display: none;">
+          <button id="nextPageButton" class="next-page-button">
+            🎯 센서 탐색하러 가기 (2페이지)
+          </button>
+          <button id="newChatButton" class="new-chat-button">
+            💡 새로운 아이디어 만들기
+          </button>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
